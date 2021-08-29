@@ -4,11 +4,10 @@ export const WeatherBox = styled.div`
   position: absolute;
   right: 1.5rem;
   top: 0;
+  text-align: center;
 `
 export const WeatherIcon = styled.img`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 `
 
 export const Icon = styled.span`

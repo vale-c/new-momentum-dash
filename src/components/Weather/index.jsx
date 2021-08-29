@@ -43,7 +43,8 @@ const Weather = ({ className }) => {
     <Temperature>{data?.main?.temp}°C</Temperature>
     <WeatherIcon alt={`weather-icon-${iconId}`} src={`http://openweathermap.org/img/w/${icon}.png`} />
     <Description>{description}</Description>
-  </WeatherBox>);
+  </WeatherBox>
+  );
 };
 
 Weather.propTypes = {
