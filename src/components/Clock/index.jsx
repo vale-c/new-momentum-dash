@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from "prop-types";
 import { ClockWrapper } from './styled'
 
 const Clock = () => {
@@ -11,11 +12,16 @@ const Clock = () => {
     }
   })
 
+  let dateTime = date.toLocaleTimeString()
   return (
     <ClockWrapper>
-      {date.toLocaleTimeString()} {date < 12 ? 'AM' : 'PM'}
+      {dateTime}
     </ClockWrapper>
   )
+}
+
+Clock.propTypes = {
+  dateTime: PropTypes.string,
 }
 
 export default Clock

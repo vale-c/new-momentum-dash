@@ -6,11 +6,11 @@ import Weather from './components/Weather'
 
 const App = () => {
   return (
-    <div>
+    <>
       <Clock />
       <Quotes />
       <Weather />
-    </div>
+    </>
   )
 }
 
