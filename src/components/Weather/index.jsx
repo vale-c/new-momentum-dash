@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import {Description, Temperature, Town, WeatherBox, WeatherIcon } from './styled'
 
 const OW_API = '13b0886c7c035390785605fc1c637712';
-const CORS = 'https://cors-anywhere.herokuapp.com/'
 
 const Weather = ({ className }) => {
   const [currentPosition, setCurrentPosition] = useState([]);
   const [data, setData] = useState([]);
-  const [error, setError] = useState(false);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -26,8 +24,6 @@ const Weather = ({ className }) => {
           setData(res);
           console.log(res);
         })
-        .catch(error => setError(true));
-        console.log('Error: ', error);
     })
   }
   }, []);
