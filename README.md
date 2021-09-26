@@ -12,4 +12,4 @@
 
 #### Screenshot (NEW!)
 
-![alt text](https://github.com/vale-c/new-momentum-dash/blob/aa6e152d0c74d300e506b5a7ae84a8fdd46e5ce9/Screenshot%202021-08-22%20at%2022.20.48.png)
+![alt text](https://github.com/vale-c/new-momentum-dash/blob/main/screenshot.png)
