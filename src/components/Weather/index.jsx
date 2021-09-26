@@ -11,10 +11,10 @@ import {
 import { getIconFromWeather } from '../../_utils/helpers.js'
 
 const Weather = () => {
+  const [, setLoading] = useState(true)
   const [, setCurrentPosition] = useState([])
   const [town, setTown] = useState('')
   const [weatherData, setWeatherData] = useState([])
-  const [, setLoading] = useState(true)
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -46,16 +46,18 @@ const Weather = () => {
 
   return (
     <WeatherBox>
-      <Town>{town}</Town>
-      <Temperature>{temperature}</Temperature>
+      {town && <Town>{town}</Town>}
+      {temperature && <Temperature>{temperature}</Temperature>}
       {condition && (
-        <WeatherIcon
-          alt={`weather-icon-${condition}`}
-          src={getIconFromWeather(condition)}
-        />
+        <>
+          <WeatherIcon
+            alt={`weather-icon-${condition}`}
+            src={getIconFromWeather(condition)}
+          />
+          <Description>{condition}</Description>
+        </>
       )}
-      <Description>{condition}</Description>
-      <Wind>Wind speed: {wind}</Wind>
+      {wind && <Wind>Wind speed: {wind}</Wind>}
     </WeatherBox>
   )
 }
