@@ -1,50 +1,67 @@
-import React, { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import {Description, Temperature, Town, WeatherBox, WeatherIcon } from './styled'
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
+import {
+  Description,
+  Temperature,
+  Town,
+  WeatherBox,
+  WeatherIcon,
+  Wind,
+} from './styled'
+import { getIconFromWeather } from '../../_utils/helpers.js'
 
-const OW_API = '13b0886c7c035390785605fc1c637712';
+const Weather = () => {
+  const [, setCurrentPosition] = useState([])
+  const [town, setTown] = useState('')
+  const [weatherData, setWeatherData] = useState([])
+  const [, setLoading] = useState(true)
 
-const Weather = ({ className }) => {
-  const [currentPosition, setCurrentPosition] = useState([]);
-  const [data, setData] = useState([]);
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-      const pos = [position.coords.latitude, position.coords.longitude];
-      setCurrentPosition(pos);
+        const lat = position.coords.latitude
+        const lon = position.coords.longitude
+        setCurrentPosition([lat, lon])
+        fetch(
+          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`,
+        )
+          .then((res) => res.json())
+          .then((res) => {
+            setTown(res?.address?.town)
+          })
+        return fetch(`https://goweather.herokuapp.com/weather/${lat},${lon}`)
+          .then((res) => res.json())
+          .then((res) => {
+            setWeatherData(res)
+            setLoading(false)
+            console.log('weather', res)
+          })
+      })
+    }
+  }, [])
 
-      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${pos[0]}&lon=${pos[1]}`)
-        .then((res) => {
-          setData(res);
-         // console.log(res);
-        })
-        return fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${pos[0]}&lon=${pos[1]}&units=metric&appid=${OW_API}`)
-        .then((res) => res.json())
-        .then((res) => {
-          setData(res);
-          console.log(res);
-        })
-    })
-  }
-  }, []);
-
-  const iconId = data?.weather?.[0]?.id
-  const icon = data?.weather?.[0]?.icon
-  const description = data?.weather?.[0]?.description
-  const town = data?.name
+  const temperature = weatherData?.temperature
+  const condition = weatherData?.description?.toLowerCase()
+  const wind = weatherData?.wind
 
   return (
-  <WeatherBox>
-    <Town>{town}</Town>
-    <Temperature>{data?.main?.temp}°C</Temperature>
-    <WeatherIcon alt={`weather-icon-${iconId}`} src={`http://openweathermap.org/img/w/${icon}.png`} />
-    <Description>{description}</Description>
-  </WeatherBox>
-  );
-};
+    <WeatherBox>
+      <Town>{town}</Town>
+      <Temperature>{temperature}</Temperature>
+      {condition && (
+        <WeatherIcon
+          alt={`weather-icon-${condition}`}
+          src={getIconFromWeather(condition)}
+        />
+      )}
+      <Description>{condition}</Description>
+      <Wind>Wind speed: {wind}</Wind>
+    </WeatherBox>
+  )
+}
 
 Weather.propTypes = {
   data: PropTypes.object,
-};
+}
 
-export default Weather;
+export default Weather

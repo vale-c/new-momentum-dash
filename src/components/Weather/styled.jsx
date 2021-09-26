@@ -15,16 +15,22 @@ export const Icon = styled.span`
 `
 
 export const Town = styled.h2`
-  font-family: 'Roboto', 'Helvetica Neue', 'monospace'
+  font-family: 'Roboto', 'Helvetica Neue', 'monospace';
   text-align: center;
 `
 
 export const Description = styled.h3`
-  font-family: 'Roboto', 'Helvetica Neue', 'monospace'
+  font-family: 'Roboto', 'Helvetica Neue', 'monospace';
   text-align: center;
 `
 
+export const Wind = styled.p`
+  font-family: 'Roboto', 'Helvetica Neue', 'monospace';
+  text-align: center;
+  font-weight: 300;
+`
+
 export const Temperature = styled.h2`
-  font-family: 'Roboto', 'Helvetica Neue', 'monospace'
+  font-family: 'Roboto', 'Helvetica Neue', 'monospace';
   text-align: center;
 `
